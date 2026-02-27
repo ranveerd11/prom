@@ -1449,6 +1449,8 @@ function clickNightItem(item) {
   const fb = document.getElementById('feedback4');
   nightClicks[item] = true;
 
+  const explored = ['clock', 'mug', 'book'].filter(k => nightClicks[k]).length;
+
   if (item === 'clock') {
     fb.textContent = "2:47 AM... our calls never have a bedtime";
   } else if (item === 'mug') {
@@ -1456,9 +1458,13 @@ function clickNightItem(item) {
   } else if (item === 'book') {
     fb.textContent = "Hmm, just some textbooks... keep looking!";
   } else if (item === 'laptop') {
-    fb.textContent = "Every call with you makes the day worth it";
-    fb.classList.remove('dim');
-    collectLetter('M', document.querySelector('.night-laptop'));
+    if (explored < 2) {
+      fb.textContent = "The call is running... explore the room a bit more first!";
+    } else {
+      fb.textContent = "Every call with you makes the day worth it";
+      fb.classList.remove('dim');
+      collectLetter('M', document.querySelector('.night-laptop'));
+    }
   }
 }
 

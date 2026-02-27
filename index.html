@@ -1202,6 +1202,19 @@ function sfxDodge() { playBeep(300, 0.08); playBeep(150, 0.08); }
 function sfxYes() {
   [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playBeep(f, 0.2), i * 120));
 }
+function sfxStart() {
+  // Classic retro "game start" jingle
+  const notes = [
+    [330, 0.08], [330, 0.08], [0, 0.08], [330, 0.08],
+    [0, 0.06], [262, 0.08], [330, 0.08], [0, 0.06],
+    [392, 0.15], [0, 0.1], [196, 0.15]
+  ];
+  let t = 0;
+  notes.forEach(([freq, dur]) => {
+    if (freq > 0) setTimeout(() => playBeep(freq, dur), t * 1000);
+    t += dur + 0.02;
+  });
+}
 
 // ===== GAME STATE =====
 const collected = { P: false, R: false, O: false, M: false, Q: false };
@@ -1282,7 +1295,7 @@ generateStars('title-stars', 100);
 // ===== START GAME =====
 function startGame() {
   initAudio();
-  sfxClick();
+  sfxStart();
   document.getElementById('title-screen').classList.remove('active');
   document.getElementById('hud').classList.add('visible');
   goToRoom(1);
